@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device - width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Firebase</title>
+
+
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyB8LNlIcQ62HqT7vm3apGXVhPjukVQCriA",
+            authDomain: "my-test-project-bd5e5.firebaseapp.com",
+            databaseURL: "https://my-test-project-bd5e5.firebaseio.com",
+            projectId: "my-test-project-bd5e5",
+            storageBucket: "my-test-project-bd5e5.appspot.com",
+            messagingSenderId: "157491874037"
+        };
+        firebase.initializeApp(config);
+        // Get a reference to the database service
+        var database = firebase.database();
+    </script>
+    <script type="text/javascript" src="./assets/functions.js"></script>
+    <script type="text/javascript" src="./assets/script.js"></script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <input type="text" placeholder="Write your name, please!" name="player_name" id="player_name" />
+                <button class="btn" id="start">Start!</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <h1 id="player1Name"></h1>
+            </div>
+            <div class="col s6">
+                <h1 id="player2Name"></h1>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <textarea rows="4" name="char" id="chat">
+                    </textarea>
+                <input type="textarea" name="message" id="message" />
+                <button class="btn" id="sendToChat">Send</button>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
