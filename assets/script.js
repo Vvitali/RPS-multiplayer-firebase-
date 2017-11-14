@@ -1,18 +1,17 @@
 console.log("script.js connected");
-
+//1 TODO
 var counter = 0;
-var chatCounter =
-    var playerName =
+var chatCounter = 0;
+var playerName;
 
+function writeUserData1() {
+    console.log("click")
+    playerName = $("#player_name").val()
 
-        function writeUserData1() {
-            console.log("click")
-            playerName = $("#player_name").val()
-
-            database.ref('players/' + counter).set({
-                name: playerName,
-            });
-        }
+    database.ref('players/' + counter).set({
+        name: playerName,
+    });
+}
 
 function readTheData() {
     var firstPlayerHandler = firebase.database().ref('players/' + "0");
@@ -51,26 +50,39 @@ function checkIfThe1stPlayerExists() {
     });
 }
 
+function writeNewChatMessage(name, message) {
+    var postData = {
+        name: name,
+        message: message
+    };
+    // Get a key for a new Post.
+    var updates = {};
+    updates['/chat/' + chatCounter] = postData;
+    firebase.database().ref().update(updates)
+    firebase.database().ref('chat/').update({
+        messageCounter: ++chatCounter
+    });
+    return 1;
+}
+
 $(document).ready(function() {
     console.log("Document ready");
-    $("#start").on("click", writeUserData1);
-    checkIfThe1stPlayerExists();
-    readTheData();
-    $("#sendToChat").click(function() {
-        console.log("sendToChat button:" + chatCounter);
-        database.ref('chat/' + chatCounter++).set({
-            name: playerName,
-            message: $("#message").val()
-        });
-        data.ref('chat/messageCounter').set(chatCounter);
-    });
-
-    var chatHolder = firebase.database().ref('chat/');
-    chatHolder.on('value', function(snapshot) {
-
+    counter;
+    firebase.database().ref('chat/').on("value", function(snapshot) {
+        $("#chat").html("");
         var chatData = snapshot.val();
         chatCounter = chatData.messageCounter;
-        $("#chat").text(chatData[0].name + ": " + chatData[0].message);
+        console.log("Ready: chatCounter: " + chatCounter);
+        for (var i = 0; i < chatCounter; i++) $("#chat").append(chatData[i].name + ": " + chatData[i].message + "&#13;");
     });
+
+    $("#start").on("click", writeUserData1);
+
+    $("#sendToChat").click(function() {
+        playerName = $("#player_name").val();
+        writeNewChatMessage(playerName, $("#message").val());
+
+    });
+
 
 });
