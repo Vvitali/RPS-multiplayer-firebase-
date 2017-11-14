@@ -81,6 +81,7 @@ $(document).ready(function() {
     $("#sendToChat").click(function() {
         playerName = $("#player_name").val();
         writeNewChatMessage(playerName, $("#message").val());
+        $("#message").val("");
 
     });
 
