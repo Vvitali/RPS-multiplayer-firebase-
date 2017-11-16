@@ -57,6 +57,7 @@ function namePlease() {
 }
 
 function logic(input1, input2) {
+    console.log("Logic:" + input1 + " " + input2);
     if (input1 == "rock") {
         switch (input2) {
             case 'rock':

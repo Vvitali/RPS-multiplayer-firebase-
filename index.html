@@ -19,22 +19,44 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script>
+        /* global firebase */
         // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyB8LNlIcQ62HqT7vm3apGXVhPjukVQCriA",
-            authDomain: "my-test-project-bd5e5.firebaseapp.com",
-            databaseURL: "https://my-test-project-bd5e5.firebaseio.com",
-            projectId: "my-test-project-bd5e5",
-            storageBucket: "my-test-project-bd5e5.appspot.com",
-            messagingSenderId: "157491874037"
+            apiKey: "AIzaSyAPFQwebNgPz6QfLrkb28a4vP7_7MLictY",
+            authDomain: "rps-game-f02b1.firebaseapp.com",
+            databaseURL: "https://rps-game-f02b1.firebaseio.com",
+            projectId: "rps-game-f02b1",
+            storageBucket: "",
+            messagingSenderId: "861809381878"
         };
-        firebase.initializeApp(config);
-        // Get a reference to the database service
-        var database = firebase.database();
+        firebase.initializeApp(config); // Get a reference to the database service var database = firebase.database();
     </script>
     <script type="text/javascript" src="./assets/functions.js"></script>
     <script type="text/javascript" src="./assets/script.js"></script>
 
+    <nav>
+        <div class="nav-wrapper blue">
+            <a href="#" class="brand-logo center">RPS-game</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li>
+                    <a href="sass.html">
+                        <!-- rock paper scissors -->
+                    </a>
+                </li>
+                <li>
+                    <a href="badges.html">
+                        <!-- rock paper scissors -->
+                    </a>
+                </li>
+                <li>
+                    <a href="collapsible.html">
+                        <!-- rock paper scissors -->
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- container -->
     <div class="container">
         <div class="row">
             <div class="col s12">
@@ -47,13 +69,12 @@
                 <h1 id="player1Name">Player1</h1>
                 <div class="card blue-grey darken-1 ">
                     <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit, voluptatibus.</p>
+                        <span class="card-title" id="0Title">Card Title</span>
                     </div>
-                    <div class="card-action">
-                        <a href="#">Scissors</a>
-                        <a href="#">Paper</a>
-                        <a href="#">Rock</a>
+                    <div class="card-action" id="actionBar1">
+                        <a href="#" class="pButtons" data-player="0" id="scissors">Scissors</a>
+                        <a href="#" class="pButtons" data-player="0" id="paper">Paper</a>
+                        <a href="#" class="pButtons" data-player="0" id="rock">Rock</a>
                     </div>
                 </div>
             </div>
@@ -61,13 +82,12 @@
                 <h1 id="player2Name">Player2</h1>
                 <div class="card blue-grey darken-1 ">
                     <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, dolorum.</p>
+                        <span class="card-title" id="1Title">Card Title</span>
                     </div>
-                    <div class="card-action">
-                        <a href="#">Scissors</a>
-                        <a href="#">Paper</a>
-                        <a href="#">Rock</a>
+                    <div class="card-action" id="actionBar2">
+                        <a href="#" class="pButtons" data-player="1" id="scissors">Scissors</a>
+                        <a href="#" class="pButtons" data-player="1" id="paper">Paper</a>
+                        <a href="#" class="pButtons" data-player="1" id="rock">Rock</a>
                     </div>
                 </div>
             </div>
