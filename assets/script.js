@@ -67,6 +67,7 @@ $(document).ready(function() {
                     name: "Waiting for opponent",
                     answer: 0
                 });
+                game();
             }
             //actions for the second spot
             if (snapshot.val().slot0 === 1 && snapshot.val().slot1 == 0) {
@@ -81,7 +82,6 @@ $(document).ready(function() {
                     role: 1,
                     wins: 0,
                     losses: 0,
-
                 });
                 $("#player2Name").text(playerName);
                 $("#player1Name").text(snapshot.val().players[0].name);
@@ -95,9 +95,13 @@ $(document).ready(function() {
                     name: "Waiting for opponent",
                     answer: 0
                 });
-
+                game();
             }
-            game();
+            if (snapshot.val().slot0 === 1 && snapshot.val().slot1 == 1) {
+                $("#0Title").text("I'm sorry, but all spots are busy right now. Try later, or you can just use a chat in order to pass the time.");
+                $("#1Title").text("I'm sorry, but all spots are busy right now. Try later, or you can just use a chat in order to pass the time.");
+            }
+
         });
     });
     db.ref("/players/").once("value").then(function(snapshot) {
@@ -121,10 +125,11 @@ function game() {
     console.log("Game: start");
     $(".pButtons").click(function(event) {
         console.log(event.currentTarget.id + " " + $(event.currentTarget).attr("data-player"));
-        $("#" + $(event.currentTarget).attr("data-player") + "Title").text(event.currentTarget.id);
+        $("#" + $(event.currentTarget).attr("data-player") + "Title").text("You choose: " + event.currentTarget.id);
         db.ref("/players/" + $(event.currentTarget).attr("data-player")).update({
             answer: event.currentTarget.id
         });
+
     });
     var PlayerHandler = db.ref("/players/");
     PlayerHandler.on('value', function(snapshot) {
@@ -140,21 +145,27 @@ function game() {
                 case 0:
                     console.log("tie");
                     $("#" + playerRole + "Title").text("Tie");
-                    $("#" + (playerRole % 1) + "Title").text(snapshot.val()[playerRole % 1].answer);
-                    result.once("value", function() {
-
-                    });
+                    $("#" + (playerRole ^ 1) + "Title").text(snapshot.val()[playerRole ^ 1].name + " answer: " + snapshot.val()[playerRole ^ 1].answer);
+                    setTimeout(function() {
+                        $("#" + playerRole + "Title").text("New round: make your choice");
+                    }, 3000);
                     break;
                 case 1:
                     console.log("Player 1 wins");
-                    $("#" + playerRole + "Title").text("Player 1 wins");
+                    $("#" + playerRole + "Title").text(snapshot.val()[0].name + " wins");
                     firebase.database().ref("/players/" + 1).update({ wins: 0 });
-                    $("#" + (playerRole % 1) + "Title").text(snapshot.val()[playerRole % 1].answer);
+                    $("#" + (playerRole ^ 1) + "Title").text(snapshot.val()[playerRole ^ 1].name + " answer: " + snapshot.val()[playerRole ^ 1].answer);
+                    setTimeout(function() {
+                        $("#" + playerRole + "Title").text("New round: make your choice");
+                    }, 3000);
                     break;
                 case 2:
                     console.log("Player 2 wins");
-                    $("#" + playerRole + "Title").text("Player 2 wins");
-                    $("#" + (playerRole % 1) + "Title").text(snapshot.val()[playerRole % 1].answer);
+                    $("#" + playerRole + "Title").text(snapshot.val()[1].name + " wins");
+                    $("#" + (playerRole ^ 1) + "Title").text(snapshot.val()[playerRole ^ 1].name + " answer: " + snapshot.val()[playerRole ^ 1].answer);
+                    setTimeout(function() {
+                        $("#" + playerRole + "Title").text("New round: make your choice");
+                    }, 3000);
                     break;
             }
             firebase.database().ref("/players/" + 1).update({ answer: 0 });
