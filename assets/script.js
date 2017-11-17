@@ -4,19 +4,11 @@ var chatCounter = 0;
 var playerName;
 var db = firebase.database();
 var playerRole;
-/*
-0)+ Get a role from database
-1)+ Get username and write it to database
-2) Show username on the left tab
-3) wait for second player
-4) get second username and write it to database
-5) Show RPS-buttons on both tabs
-6) Write player's chooses into players-hive
-7) compare results, and display who wins
-8) do it again
-chat: completed
+var score = [
+    [0, 0],
+    [0, 0]
+];
 
-*/
 function writeNewChatMessage(name, message) {
     var postData = {
         name: name,
@@ -152,15 +144,17 @@ function game() {
                     break;
                 case 1:
                     console.log("Player 1 wins");
+                    score[0][0]++;
+                    score[1][1]++;
                     $("#" + playerRole + "Title").text(snapshot.val()[0].name + " wins");
-                    firebase.database().ref("/players/" + 1).update({ wins: 0 });
+                    $("#" + playerRole + "Pa").html("Score: " + snapshot.val()[0].name + " wins: " + score[0][0] + ", losses: " + score[0][1] + "<br>" + snapshot.val()[1].name + " wins: " + score[1][0] + ", losses: " + score[1][1]);
                     $("#" + (playerRole ^ 1) + "Title").text(snapshot.val()[playerRole ^ 1].name + " answer: " + snapshot.val()[playerRole ^ 1].answer);
-                    setTimeout(function() {
-                        $("#" + playerRole + "Title").text("New round: make your choice");
-                    }, 3000);
                     break;
                 case 2:
                     console.log("Player 2 wins");
+                    score[1][0]++;
+                    score[0][1]++;
+                    $("#" + playerRole + "Pa").html("Score: " + snapshot.val()[0].name + " wins: " + score[0][0] + ", losses: " + score[0][1] + "<br>" + snapshot.val()[1].name + " wins: " + score[1][0] + ", losses: " + score[1][1]);
                     $("#" + playerRole + "Title").text(snapshot.val()[1].name + " wins");
                     $("#" + (playerRole ^ 1) + "Title").text(snapshot.val()[playerRole ^ 1].name + " answer: " + snapshot.val()[playerRole ^ 1].answer);
                     setTimeout(function() {
@@ -168,8 +162,8 @@ function game() {
                     }, 3000);
                     break;
             }
-            firebase.database().ref("/players/" + 1).update({ answer: 0 });
             firebase.database().ref("/players/" + 0).update({ answer: 0 });
+            firebase.database().ref("/players/" + 1).update({ answer: 0 });
         }
     });
 
